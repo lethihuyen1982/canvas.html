@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bouncing ball</title>
+</head>
+
+<body>
+    <canvas id="board" width="400px" height="400px" style="border: 1px solid black;"></canvas>
+    <script>
+        let canvas = document.getElementById("board");
+        let context = canvas.getContext("2d");
+        function Game() {
+            let that = this
+            let view
+
+            this.balls = []
+            for (let i = 0; i < 5; i++) {
+                this.balls.push(new Ball())
+            }
+
+            this.start = function () {
+                setTimeout(function () {
+                    for (let i = 0; i < that.balls.length; i++) {
+                        let ball = that.balls[i]
+                        ball.move()
+                        if (ball.x > 400 || ball.x < 0) {
+                            ball.reverseX()
+                        }
+                        if (ball.y > 400 || ball.y < 0) {
+                            ball.reverseY()
+                        }
+                    }
+                    that.start()
+                }, 1000 / 120)
+            }
+
+            this.setViewEngine = function (ve) {
+                view = ve
+            }
+        }
+
+        function ViewEngine(game) {
+            var render = function () {
+                let game = that.game
+                if (game != null) {
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    for (let i = 0; i < game.balls.length; i++) {
+                        drawCircle(game.balls[i])
+                    }
+                }
+                window.requestAnimationFrame(render)
+            }
+            window.requestAnimationFrame(render)
+
+            let that = this
+            let canvas = document.getElementById("board")
+            let context = canvas.getContext("2d")
+            this.game = game
+
+            var drawCircle = function (circle) {
+                context.fillStyle = `rgb(${circle.color.r}, ${circle.color.g}, ${circle.color.b})`;
+                context.beginPath()
+                context.arc(circle.x, circle.y, circle.size / 2, 0, 2 * Math.PI)
+                context.stroke()
+                context.fill();
+            }
+        }
+
+        function Ball() {
+            this.color = new Color()
+            this.x = randomNumber(400)
+            this.y = randomNumber(400)
+            this.size = randomNumber(200)
+
+            let vX = randomNumber(4) - 2
+            let vY = randomNumber(4) - 2
+
+            this.move = function () {
+                this.x += vX
+                this.y += vY
+            }
+
+            this.reverseX = function () {
+                vX = -vX
+            }
+
+            this.reverseY = function () {
+                vY = -vY
+            }
+        }
+
+        function Color() {
+            this.r = randomNumber(255)
+            this.g = randomNumber(255)
+            this.b = randomNumber(255)
+        }
+
+        function randomNumber(cap) {
+            return Math.round(Math.random() * cap)
+        }
+
+    </script>
+</body>
+
+</html>
