@@ -13,6 +13,7 @@
     <script>
         let canvas = document.getElementById("board");
         let context = canvas.getContext("2d");
+        
         function Game() {
             let that = this
             let view
@@ -44,30 +45,33 @@
         }
 
         function ViewEngine(game) {
-            var render = function () {
-                let game = that.game
-                if (game != null) {
-                    context.clearRect(0, 0, canvas.width, canvas.height);
-                    for (let i = 0; i < game.balls.length; i++) {
-                        drawCircle(game.balls[i])
+            let render = function () {
+                setTimeout(function () {
+                    let game = that.game
+                    if (game != null) {
+                        context.clearRect(0, 0, canvas.width, canvas.height);
+                        for (let i = 0; i < game.balls.length; i++) {
+                            drawCircle(game.balls[i])
+                        }
                     }
-                }
-                window.requestAnimationFrame(render)
-            }
-            window.requestAnimationFrame(render)
+                    window.requestAnimationFrame(render)
 
-            let that = this
-            let canvas = document.getElementById("board")
-            let context = canvas.getContext("2d")
-            this.game = game
 
-            var drawCircle = function (circle) {
-                context.fillStyle = `rgb(${circle.color.r}, ${circle.color.g}, ${circle.color.b})`;
-                context.beginPath()
-                context.arc(circle.x, circle.y, circle.size / 2, 0, 2 * Math.PI)
-                context.stroke()
-                context.fill();
-            }
+                    let that = this
+                    let canvas = document.getElementById("board")
+                    let context = canvas.getContext("2d")
+                    this.game = game
+                    window.requestAnimationFrame(render)
+
+                    let drawCircle = function (circle) {
+                        context.fillStyle = `rgb(${circle.color.r}, ${circle.color.g}, ${circle.color.b})`;
+                        context.beginPath()
+                        context.arc(circle.x, circle.y, circle.size / 2, 0, 2 * Math.PI)
+                        context.stroke()
+                        context.fill();
+                    }
+                })
+             }
         }
 
         function Ball() {
