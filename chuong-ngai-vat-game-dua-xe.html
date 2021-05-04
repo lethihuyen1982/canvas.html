@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chuong ngai vat game dua xe</title>
+</head>
+
+<body>
+    <canvas id="game" width="800px" height="600px" style="border: 3px solid #000000"></canvas>
+    <script>
+        let canvas = document.getElementById("game");
+        let context = canvas.getContext("2d");
+
+        function Cars(xPosition,yPosition,color){
+            this.xPosition = xPosition
+            this.yPosition = yPosition
+            this.color = color
+        }
+
+        
+
+        let car1 = new Cars(0,0,"#fa4b2a")
+        let car2 = new Cars(600,300,"#001fe0")
+
+        drawCar(car1)
+        drawCar(car2)
+
+
+        function drawCar(car) {
+            context.beginPath();
+            context.fillStyle = car.color;
+            context.fillRect(car.xPosition, car.yPosition, 150, 100);
+        }
+
+
+    </script>
+</body>
+
+</html>
