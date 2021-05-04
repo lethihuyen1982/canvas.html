@@ -17,30 +17,27 @@
         gameContext.fillRect(20, 20, 150, 100);
 
         let carYPosition = 20;
+        let carYVelosity = 1;
 
-
-        function moveCarDown() {
-            gameContext.clearRect(20, carYPosition, 150, 100)
-            if (carYPosition + 100 < 600) {
-                carYPosition++;
-            }
-            drawCar();
-        }
-        setInterval(moveCarDown, 10);
-
-        function moveCarUp() {
-            gameContext.clearRect(20, carYPosition, 150, 100)
-            if (carYPosition > 0) {
-                carYPosition--;
-            }
-            drawCar();
-        }
-        setInterval(moveCarUp, 10);
+        setInterval(moveCar, 10);
 
         function drawCar() {
             gameContext.beginPath();
             gameContext.fillStyle = "#fa4b2a";
             gameContext.fillRect(20, carYPosition, 150, 100)
+        }
+
+        function moveCar() {
+            gameContext.clearRect(20, carYPosition, 150, 100)
+            carYPosition += carYVelosity
+            if (carYPosition < 0) {
+                carYVelosity = 1
+            }
+            else if(carYPosition + 100 > 600) {
+                carYVelosity = -1
+            }
+
+            drawCar()
         }
     </script>
 </body>
